@@ -1,0 +1,32 @@
+\section*{TypeFuncs and Module declatations}
+\begin{multicols}{2}
+\begin{lstlisting}[caption=A generic monad transformer]
+TypeFunc "Monad" ⇒ (* ⇒ *) ⇒ Module
+Monad 'M ⇒ Module {
+  Func 'a → ">>=" → ('a → 'M 'b) → 'M 'b
+  Func "return" → 'a → 'M 'a
+}
+\end{lstlisting}
+\columnbreak
+Maybe explain kinds.
+Explain TypeFuncs.
+Explain how modules are kind-level.
+Typefuncs curry-able like Funcs.
+\end{multicols}
+
+\section*{module-instantiations}
+\begin{lstlisting}[caption=F\#'s option monad]
+  Data "Some" → 'a → OptionT 'a
+  Data "None"      → OptionT 'a
+
+  TypeFunc "Option" ⇒ * ⇒ Monad
+  Option 'a ⇒ Monad {
+    
+  }
+\end{lstlisting}
+
+\section*{TypeAliases}
+data is actually FuncAlias(two-way). Type-Alias is equivalent for types.
+
+\section*{ArrowFuncs}
+in order to represent the monad bind operator (\texttt{>>=}) as an arrow, ArrowFuncs.

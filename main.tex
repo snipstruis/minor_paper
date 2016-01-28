@@ -1,0 +1,31 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage{geometry} % propper margins on a4 paper
+\usepackage{pdfpages} % to include cover
+\usepackage{multicol} % allows multiple colums
+
+\usepackage{fontspec} % allows custom fonts
+\setmainfont{DejaVu Serif}
+\setmonofont{DejaVu Sans Mono}
+
+\usepackage{listings} % allows code listings
+\lstset{basicstyle=\footnotesize\ttfamily,
+        breaklines=true,
+        keepspaces=true,
+        %frame=single,
+        captionpos=b,
+        morekeywords={Func,Data,TypeFunc,Module,TypeAlias,ArrowFunc},
+        keywordstyle=\bfseries }
+
+%\usepackage{soul,color} % for highlighting with \hl
+%\definecolor{light-gray}{gray}{0.80}
+%\sethlcolor{light-gray}
+
+\begin{document}
+\includepdf[pages=1]{build/cover.pdf}
+\input{intro}
+\pagebreak
+\input{metacasanova}
+\pagebreak
+\input{typesystem}
+
+\end{document}

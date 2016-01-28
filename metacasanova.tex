@@ -1,0 +1,48 @@
+\section*{Meta-Casanova}
+\begin{multicols}{2}
+  Meta-casanova uses a syntax similar to natural deduction.
+  A rule is comprised of a line with below it on the left the input, and on the right the output.
+  Above the line are premises that are executed sequentially.
+
+  Multiple rules may match at any given time.
+  If this happens, the program execution splits into multiple branches.
+  Each following one rule.
+  If none of the rules match, the branch dies off. 
+  
+  This branch-and-die paradigm is very useful for writing parsers.
+  For example: when a numeric digit is encountered, it is unclear whether an integer is being parsed or when a floating point literal is being parsed. 
+  In Meta-Casanova, you just write two rules. One that matches digits followed by a delimiter, and another that matches digits followed by a dot and optionally more digits.
+\columnbreak
+\begin{lstlisting}[caption=A Boolean expression interpreter in Meta-Casanova.]
+  Data "TRUE"  → Value
+  Data "FALSE" → Value
+
+  Func "eval" → Expr → Value
+
+  Data Expr → "&" → Expr → Expr
+  Data Expr → "|" → Expr → Expr
+
+
+  eval a → TRUE
+  eval b → res
+  ────────────────
+  eval (a&b) → res
+  
+
+  eval a → FALSE
+  ──────────────────
+  eval (a&b) → FALSE
+ 
+
+  eval a → TRUE
+  ─────────────────
+  eval (a|b) → TRUE
+
+
+  eval a → FALSE
+  eval b → res
+  ────────────────
+  eval (a|b) → res
+\end{lstlisting}
+
+\end{multicols}
