@@ -1,0 +1,53 @@
+\section{The Problem}
+\begin{multicols}{2}
+  Parser monads are a useful tool for writing compilers.
+  They are not only useful in the lexing stage,
+  as they can be used for interpreting intermediate representations.
+
+  The best thing about monadic parsing is that it is \textit{composable}.
+  It is possible to combine multiple parsers into a single parser.
+  For example: there might be a parser (\texttt{digit}) that can parse a single digit,
+  and another (\texttt{repeat}) that can apply a parser multiple times until it fails.
+  It is then trivial to combine these into a new parser.
+  \begin{lstlisting}[language=Caml]
+  (* parses multiple digits *)
+  let digits = repeat digit
+  \end{lstlisting} 
+
+  A parser is a function that takes an input stream and a context and returns a result.
+  A generic implementation may look like this.
+  \begin{lstlisting}[language=Caml]
+  type Parser<'char,'ctxt,'result> =
+    List<'char> * 'ctxt
+      -> Result<'char,'ctxt,'result>
+  \end{lstlisting}
+  
+  The Result contains ---if everything went well--- the value returned by the parser, the modified context, and the new input stream position.
+  \begin{lstlisting}[language=Caml]
+  type Result<'char,'ctxt,'result> = 
+    | Done  of 'result*List<'char>*'ctxt
+    | Error of string
+  \end{lstlisting}
+
+  It may not be obvious, but the parser monad can be constructed from more primitive monads.
+  The input stream and the context are represented as state-monads, and the result is an either-monad.
+  \begin{lstlisting}[language=Caml]
+  type Parser<'char,'ctxt,'result> =
+    State<List<'char>,
+          State<'ctxt,
+                Either<result,'error>>
+  \end{lstlisting}
+  EDIT: could be\\
+  \texttt{State<List<'char>*'ctxt,Either<...>>}?
+
+  
+  
+%  brief overview of parser monads and their advantages. (parser combinators)
+%  observation that the parser monad is built out of other monads.
+  TODO:
+  monad transformers are a way to easily define a parser monad in terms of other monads.
+  trying to figure out what type system we need.
+  we need subtyping for general monads ($\lambda_{<:}$)\footcite[Chapter~15]{Pierce02}.
+  we require type constructors for monad transformers ($F^\omega_{<:}$)\footcite[Chapter~31]{Pierce02}.
+  added benefits are arbitrary static analysis.
+\end{multicols}

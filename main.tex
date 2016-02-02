@@ -10,10 +10,14 @@
 \lstset{basicstyle=\footnotesize\ttfamily,
         breaklines=true,
         keepspaces=true,
+        float,
         %frame=single,
         captionpos=b,
         morekeywords={Func,Data,TypeFunc,Module,TypeAlias,ArrowFunc},
         keywordstyle=\bfseries }
+
+\usepackage[style=verbose,backend=biber]{biblatex}
+\addbibresource{references.bib}
 
 \begin{document}
 \includepdf[pages=1]{build/cover.pdf}
@@ -25,5 +29,5 @@
 \input{idea}
 \pagebreak
 \input{details}
-
+\printbibliography
 \end{document}

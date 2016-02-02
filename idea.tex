@@ -1,0 +1,26 @@
+\section{The Idea}
+\begin{multicols}{2}
+  TODO:
+  talk about kinds.
+  a way to create kinds (modules).
+  a way to define type-level functions(typefuncs).
+  show example of monad transformers.
+  
+  \begin{lstlisting}[caption=A generic monad transformer]
+  TypeFunc "Monad" ⇒ (* ⇒ *) ⇒ Module
+  Monad 'M ⇒ Module {
+    Func 'a → ">>=" → ('a → 'M 'b) → 'M 'b
+    Func "return" → 'a → 'M 'a
+  }
+  \end{lstlisting}
+  \begin{lstlisting}[caption=the identity monad]
+  TypeAlias "Id" ⇒ * ⇒ *
+  Id 'a ⇒ 'a
+  
+  TypeFunc "id" ⇒ Monad 
+  id ⇒ Monad(Id) {
+    x >>= k → k x
+    return x → x
+  }
+  \end{lstlisting}
+\end{multicols}
