@@ -16,18 +16,33 @@
         morekeywords={Func,Data,TypeFunc,Module,TypeAlias,ArrowFunc},
         keywordstyle=\bfseries }
 
-\usepackage[style=verbose,backend=biber]{biblatex}
+\usepackage[style=verbose,backend=biber]{biblatex} %citations
 \addbibresource{references.bib}
+
+\setlength{\parskip}{1em} % space out paragraphs
+
+\renewcommand*{\bibfont}{\small}
+
+% make code unbreakable
+\lstnewenvironment{code}[1][]{
+   \noindent
+   \minipage{\linewidth} 
+   \lstset{#1}}
+   {\endminipage}
 
 \begin{document}
 \includepdf[pages=1]{build/cover.pdf}
 \input{intro}
-\input{problem}
 \pagebreak
-\input{metacasanova}
+\input{problem}
 \pagebreak
 \input{idea}
 \pagebreak
 \input{details}
+\pagebreak
+\input{metacasanova}
+\pagebreak
+\section{Related Work}
+(todo)
 \printbibliography
 \end{document}

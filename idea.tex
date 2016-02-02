@@ -1,19 +1,27 @@
 \section{The Idea}
 \begin{multicols}{2}
+  In order to provide higher level subtyping, additional syntax is needed.
+  We need a way to define type operators and a way to create \textit{kinds}.
+
+  Kinds are to types as types are to terms.
+  They are ``one level up'' from types.
+
   TODO:
-  talk about kinds.
   a way to create kinds (modules).
   a way to define type-level functions(typefuncs).
   show example of monad transformers.
   
-  \begin{lstlisting}[caption=A generic monad transformer]
+  %\minipage{\linewidth}\begin{lstlisting}[caption=A generic monad transformer]
+  \begin{code}[caption=A generic monad transformer]
   TypeFunc "Monad" ⇒ (* ⇒ *) ⇒ Module
   Monad 'M ⇒ Module {
     Func 'a → ">>=" → ('a → 'M 'b) → 'M 'b
     Func "return" → 'a → 'M 'a
   }
-  \end{lstlisting}
-  \begin{lstlisting}[caption=the identity monad]
+  \end{code}
+  %\end{lstlisting}\endminipage
+
+  \begin{code}[caption=the identity monad]
   TypeAlias "Id" ⇒ * ⇒ *
   Id 'a ⇒ 'a
   
@@ -22,5 +30,5 @@
     x >>= k → k x
     return x → x
   }
-  \end{lstlisting}
+  \end{code}
 \end{multicols}

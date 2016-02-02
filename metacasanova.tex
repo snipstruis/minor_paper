@@ -1,4 +1,4 @@
-\section{Meta-Casanova}
+\subsection{Meta-Casanova}
 \begin{multicols}{2}
   Meta-casanova uses a syntax similar to natural deduction.
   A rule is comprised of a line with below it on the left of the arrow the input, and on the right the output.
@@ -14,36 +14,36 @@
   This branch-and-die paradigm is very useful for writing parsers.
   For example: when a numeric digit is encountered, it is unclear whether an integer is being parsed or when a floating point literal is being parsed. 
   In Meta-Casanova, you just write two rules. One that matches digits followed by a delimiter, and another that matches digits followed by a dot and optionally more digits.
-\begin{lstlisting}[caption=A Boolean expression interpreter in Meta-Casanova.]
-  Data "TRUE"  → Value
-  Data "FALSE" → Value
 
-  Func "eval" → Expr → Value
-
-  Data Expr → "&" → Expr → Expr
-  Data Expr → "|" → Expr → Expr
-
-
-  eval a → TRUE
-  eval b → res
-  ────────────────
-  eval (a&b) → res
-  
-
-  eval a → FALSE
-  ──────────────────
-  eval (a&b) → FALSE
+\minipage{\linewidth}\begin{lstlisting}[caption=A Boolean expression interpreter in Meta-Casanova.]
+ Data "TRUE"  → Value
+ Data "FALSE" → Value
  
-
-  eval a → TRUE
-  ─────────────────
-  eval (a|b) → TRUE
-
-
-  eval a → FALSE
-  eval b → res
-  ────────────────
-  eval (a|b) → res
-\end{lstlisting}
-
+ Func "eval" → Expr → Value
+ 
+ Data Expr → "&" → Expr → Expr
+ Data Expr → "|" → Expr → Expr
+ 
+ 
+ eval a → TRUE
+ eval b → res
+ ──────────────────
+ eval (a&b) → res
+ 
+ 
+ eval a → FALSE
+ ──────────────────
+ eval (a&b) → FALSE
+ 
+ 
+ eval a → TRUE
+ ─────────────────
+ eval (a|b) → TRUE
+ 
+ 
+ eval a → FALSE
+ eval b → res
+ ────────────────
+ eval (a|b) → res
+\end{lstlisting}\endminipage
 \end{multicols}
