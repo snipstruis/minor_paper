@@ -30,8 +30,17 @@
    \lstset{#1}}
    {\endminipage}
 
+
 \begin{document}
+\pagestyle{empty}
 \includepdf[pages=1]{build/cover.pdf}
+%\newpage\mbox{} %for blank page after cover, uncomment
+\pagebreak
+\input{contents}
+\pagebreak
+\setcounter{page}{1}
+\pagenumbering{arabic}
+\pagestyle{plain}
 \input{intro}
 \pagebreak
 \input{problem}
