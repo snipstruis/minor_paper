@@ -1,17 +1,17 @@
 \section{The Problem}
-\begin{multicols}{2}
+\begin{multicols}{2}\noindent
   The goal of this paper is to extend Meta-Casanova's typesystem to the point where it can handle monad-transformers.
   To see why, we begin with a brief overview of monadic parsing.
   
-%  brief overview of parser monads and their advantages. (parser combinators)
+  \subsubsection*{Monadic Parsing}
   Parser monads are a useful tool for writing compilers.
   They are not only useful in the lexing stage,
   as they can be used for interpreting intermediate representations.
 
-  The best thing about monadic parsing is that it is \textit{composable}.
+  The best aspect about monadic parsing is that it is \textit{composable}.
   It is possible to combine multiple parsers into a single parser.
   For example: there might be a parser (\texttt{digit}) that can parse a single digit,
-  and another (\texttt{repeat}) that can apply a parser multiple times until it fails.
+  and a parser combinator (\texttt{repeat}) that can apply a parser multiple times until it fails.
   It is then trivial to combine these into a new parser.
 
   \begin{code}[language=Caml]
@@ -19,6 +19,7 @@
   let digits = repeat digit
   \end{code}
 
+  \noindent
   A parser is a function that takes an input stream and a context and returns a result.
   A generic implementation may look like this.
 
@@ -28,7 +29,8 @@
       -> Result<'char,'ctxt,'result>
   \end{code}
   
-  The Result contains ---if everything went well--- the value returned by the parser, the modified context, and the new input stream position.
+  \noindent
+  The Result contains ---if the parser was successful--- the value returned by the parser, the modified context, and the new input stream position.
   
   \begin{code}[language=Caml]
   type Result<'char,'ctxt,'result> = 
@@ -36,7 +38,8 @@
     | Error of string
   \end{code}
 
-%  observation that the parser monad is built out of other monads.
+  \subsubsection*{Monad Transformers}
+  \noindent
   It may not be obvious, but the parser monad can be constructed from more primitive monads.
   The input stream and the context are represented as a state-monad, and the result is an either-monad.
 
@@ -46,15 +49,18 @@
           Either<result,'error>>
   \end{code}
 
-% monad transformers are a way to easily define a parser monad in terms of other monads.
+  \noindent
   Combining monads by hand is tedious and non-trivial.
   Luckily there is a way to automate the process: monad transformers.\footcite[Chapter~18]{Haskell}
 
   Monad transformers are \textit{type operators} (type-level functions) that takes a monad, and returns a combined monad.
   For example: if we pass the identity monad to the state monad transformer, we get a state monad.
 
+  \subsubsection*{Towards $F^\omega_{<:}$}
   Now that it is clear why monad-transformers are desirable, let's find out what type system we need to support them.
   In order to have typeclasses like monads, we need subtyping($\lambda_{<:}$)\footcite[Chapter~15]{Pierce02}.
   And in order to have type operators, we need higher-order polymorphism ($F_\omega$).\footcite[Chapter~30]{Pierce02}.
   Combining these two, we get higher-order subtyping ($F^\omega_{<:}$)\footcite[Chapter~31]{Pierce02}.
+
+  (closing/bridge paragraph here)
 \end{multicols}

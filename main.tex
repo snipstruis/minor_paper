@@ -1,7 +1,9 @@
 \documentclass[10pt,a4paper]{article}
-\usepackage{geometry} % propper margins on a4 paper
+\usepackage[driver=xetex,a4paper]{geometry} % propper margins on a4 paper
 \usepackage{pdfpages} % to include cover
 \usepackage{multicol} % allows multiple colums
+\usepackage{titlesec} % tune whitespace around headings
+\titlespacing\subsection{0pt}{0.5em}{0.0em}
 \usepackage{fontspec} % allows custom fonts
 \setmainfont{DejaVu Serif}
 \setmonofont{DejaVu Sans Mono}
@@ -10,48 +12,45 @@
 \lstset{basicstyle=\footnotesize\ttfamily,
         breaklines=true,
         keepspaces=true,
-        float,
-        %frame=single,
+        xleftmargin=15pt, % indent = size of parindent
+        gobble=2, % ignore first 2 spaces indents in code listings
         captionpos=b,
         morekeywords={Func,Data,TypeFunc,Module,TypeAlias,ArrowFunc},
-        keywordstyle=\bfseries }
-
-\usepackage[style=verbose,backend=biber]{biblatex} %citations
-\addbibresource{references.bib}
-
-\setlength{\parskip}{1em} % space out paragraphs
-
-\renewcommand*{\bibfont}{\small}
-
-% make code unbreakable
+        keywordstyle=\bfseries,
+        escapeinside=\#\# }
+% make code unsplittable
 \lstnewenvironment{code}[1][]{
    \noindent
    \minipage{\linewidth} 
    \lstset{#1}}
    {\endminipage}
 
+\usepackage[style=verbose,backend=biber]{biblatex} %citations
+\addbibresource{references.bib}
+\renewcommand*{\bibfont}{\small} % small references at the end
+
 
 \begin{document}
 \pagestyle{empty}
 \includepdf[pages=1]{build/cover.pdf}
-%\newpage\mbox{} %for blank page after cover, uncomment
 \pagebreak
-\input{contents}
+
+\input{abstract}
+\tableofcontents
 \pagebreak
+
 \setcounter{page}{1}
 \pagenumbering{arabic}
 \pagestyle{plain}
 \input{intro}
 \pagebreak
+
 \input{problem}
 \pagebreak
 \input{idea}
 \pagebreak
 \input{details}
 \pagebreak
-\input{metacasanova}
-\pagebreak
-\section{Related Work}
-(todo)
+\input{related}
 \printbibliography
 \end{document}

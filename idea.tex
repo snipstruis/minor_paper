@@ -1,34 +1,74 @@
 \section{The Idea}
-\begin{multicols}{2}
+\begin{multicols}{2}\noindent
   In order to provide higher level subtyping, additional syntax is needed.
   We need a way to define type operators and a way to create \textit{kinds}.
 
-  Kinds are to types as types are to terms.
+  \subsubsection*{Kinds}
+  Kinds are to types as types are to terms.\footcite[Chapter~30]{Pierce02}
   They are ``one level up'' from types.
+  The most used kind is \texttt{∗} (pronounced ``type'') and represents all proper types.
+  Type operators are indicated with \texttt{⇒} to differentiate them from type-signatures (\texttt{→}).
+  For example a few types with their respective kinds:
+  \begin{code}
+  int             ∗
+  float           ∗
+  pair            ∗ ⇒ ∗ ⇒ ∗
+  int pair        ∗ ⇒ ∗ 
+  float int pair  ∗
+  pair pair       error
+  \end{code}
 
-  TODO:
-  a way to create kinds (modules).
-  a way to define type-level functions(typefuncs).
-  show example of monad transformers.
+  \noindent
+  \texttt{pair pair} is not a valid type, because type \texttt{pair} has kind \texttt{∗⇒∗⇒∗}.
+  It only accepts two types with kind \texttt{∗}.
+  Kinds are necessary to prevent these nonsensical types from typechecking.
+
+  Kinds --unlike types-- have no run-time representation.
+  They don't need it, they are only executed at compile-time to check the validity of the types.
+
+  This property of kinds can be used to compute arbitrary expressions at compile-time.
+  In Meta-Casanova, these expressions are called \texttt{TypeFunc}s, as they operate on types.
+
+  \subsubsection*{Modules}
+  \noindent
+  Modules in Meta-Casanova are a compile-time mechanism that allows the definition of interfaces.
+  It re-uses \texttt{TypeFunc}s to declare new kinds.
+  Let's implement a monad transformer module.
   
-  %\minipage{\linewidth}\begin{lstlisting}[caption=A generic monad transformer]
   \begin{code}[caption=A generic monad transformer]
-  TypeFunc "Monad" ⇒ (* ⇒ *) ⇒ Module
+  TypeFunc "Monad" ⇒ #\verb|(∗ ⇒ ∗)|# ⇒ Module
   Monad 'M ⇒ Module {
-    Func 'a → ">>=" → ('a → 'M 'b) → 'M 'b
-    Func "return" → 'a → 'M 'a
+    Func 'a →">>=" → ('a →'M 'b) →'M 'b
+    Func "return" →'a →'M 'a
   }
   \end{code}
-  %\end{lstlisting}\endminipage
 
-  \begin{code}[caption=the identity monad]
-  TypeAlias "Id" ⇒ * ⇒ *
+  \noindent
+  Now that we have the interface, let's instantiate an identity monad.
+  To use the interface, we first declare a type that fits the first argument.
+  It has kind \texttt{(∗ ⇒ ∗)} and represents the monad that will be transformed.
+  In case of the identity monad this is trivial.
+
+  \begin{code}
+  TypeFunc "IdCons" ⇒ ∗ ⇒ ∗
   Id 'a ⇒ 'a
+  \end{code}
+
+  \noindent
+  The first line declares that we have a new type operator Id that takes a type and returns a type.
+  The second line implements it. 
+
+  To instantiate the interface we create a type operator that takes no arguments and gives us a Monad.
   
+  
+  \begin{code}
   TypeFunc "id" ⇒ Monad 
-  id ⇒ Monad(Id) {
+  id ⇒ Monad IdCons {
     x >>= k → k x
     return x → x
   }
   \end{code}
+  \subsubsection*{Inheritance}
+  \texttt{inherit} keyword.
+  
 \end{multicols}

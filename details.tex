@@ -1,15 +1,28 @@
 \section{Details}
+\input{metacasanova}
+\pagebreak
+
+\subsection{TypeFunc Details}
 \begin{multicols}{2}
-\columnbreak
-Maybe explain kinds.
-Explain TypeFuncs.
-Explain how modules are kind-level.
-Typefuncs curry-able like Funcs.
+  \subsubsection*{Everything curries}
+  Everything curries because it was the most consistent from a language perspective.
+  This also gives the compiler a uniform way to handle application.
+  
+  \subsubsection*{Typefuncs have premises}
+  Maximum expressivity. (TODO: usecase here)
+  General and consistent system that works everywhere.
 \end{multicols}
 
-\subsection{module-instantiations}
-\subsection{TypeAliases}
-data is actually FuncAlias(two-way). Type-Alias is equivalent for types.
+\pagebreak
+\subsection{Module Details}
+\begin{multicols}{2}
+  \subsubsection*{Scope contents}
+  everything is possible
+  \subsubsection*{Modules declare new kinds}
+  Simplest solution was to reuse the \texttt{TypeFunc} system for compile-time tasks.
+  Possible problem in future with Dependent types: kind name space will then consist of module names and type names.
+  \subsubsection*{inheritance propegation}
+  difference between imports and inherits.
+\end{multicols}
 
-\subsection{ArrowFuncs}
-in order to represent the monad bind operator (\texttt{>>=}) as an arrow, ArrowFuncs.
+
