@@ -60,7 +60,6 @@
 
   To instantiate the interface we create a type operator that takes no arguments and gives us a Monad.
   
-  
   \begin{code}
   TypeFunc "id" ⇒ Monad 
   id ⇒ Monad IdCons {
@@ -68,7 +67,15 @@
     return x → x
   }
   \end{code}
+
+  We have now successfully implemented a monad that does nothing.
+  While it might look useless, it is actually used quite often.
+  Because, when you pass an identity monad to a monad transformer, you get the corresponding monad.
+  For example: when you pass the identity monad to a state monad transformer, you get a state monad.
+  
   \subsubsection*{Inheritance}
+  Another facet of modules is inheritance.
+  
   \texttt{inherit} keyword.
   
 \end{multicols}
