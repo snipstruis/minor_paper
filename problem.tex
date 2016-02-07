@@ -19,7 +19,6 @@
   let digits = repeat digit
   \end{code}
 
-  \noindent
   A parser is a function that takes an input stream and a context and returns a result.
   A generic implementation may look like this.
 
@@ -29,7 +28,6 @@
       -> Result<'char,'ctxt,'result>
   \end{code}
   
-  \noindent
   The Result contains ---if the parser was successful--- the value returned by the parser, the modified context, and the new input stream position.
   
   \begin{code}[language=Caml]
@@ -39,7 +37,6 @@
   \end{code}
 
   \subsubsection*{Monad Transformers}
-  \noindent
   It may not be obvious, but the parser monad can be constructed from more primitive monads.
   The input stream and the context are represented as a state-monad, and the result is an either-monad.
 
@@ -49,7 +46,6 @@
           Either<result,'error>>
   \end{code}
 
-  \noindent
   Combining monads by hand is tedious and non-trivial.
   Luckily there is a way to automate the process: monad transformers.\footcite[Chapter~18]{Haskell}
 

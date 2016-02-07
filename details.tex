@@ -3,26 +3,50 @@
 \pagebreak
 
 \subsection{TypeFunc Details}
-\begin{multicols}{2}
+\begin{multicols}{2}\noindent
+  TypeFuncs were designed to be consistent with the already existing Funcs.
+  This has a few implications:
+
   \subsubsection*{Everything curries}
   Everything curries because it was the most consistent from a language perspective.
   This also gives the compiler a uniform way to handle application.
   
-  \subsubsection*{Typefuncs have premises}
-  Maximum expressivity. (TODO: usecase here)
+  \subsubsection*{Typefuncs can have premises}
+  Maximum expressivity. (TODO: use case here)
   General and consistent system that works everywhere.
+
+  \subsubsection*{Double arrows (⇒)}
+  Double arrows to clearly differentiate run-time from compile-time.
+  Unlike Haskell (they unified types and kinds)\footnote{source}
+
+  \subsubsection*{Dependent Types}
+  A future inclusion of dependent types is possible.
+  It would mean that the type namespace will be merged into the module namespace.
+  This won't break backward compatibility, since identifiers need to be unique.
 \end{multicols}
 
 \pagebreak
 \subsection{Module Details}
-\begin{multicols}{2}
+\begin{multicols}{2}\noindent
+  Modules were designed to be as flexible as possible.
+  This has a few implications:
+
   \subsubsection*{Scope contents}
-  everything is possible
+  Scopes mainly consist of \texttt{Func} declarations, but can also be used for other things.
+
   \subsubsection*{Modules declare new kinds}
   Simplest solution was to reuse the \texttt{TypeFunc} system for compile-time tasks.
   Possible problem in future with Dependent types: kind name space will then consist of module names and type names.
-  \subsubsection*{inheritance propegation}
+
+  \subsubsection*{Inheritance propegation}
   difference between imports and inherits.
+
+  \subsubsection*{Modules can have premises}
+  'cause why not. (TODO: find simple usecase)
+
+  \subsubsection*{Module inheritance vs composition}
+  monad class; zero class; type monadZero ∈ monad, zero.
+
 \end{multicols}
 
 

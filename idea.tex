@@ -1,6 +1,6 @@
 \section{The Idea}
 \begin{multicols}{2}\noindent
-  In order to provide higher level subtyping, additional syntax is needed.
+  In order to provide the typesystem we require, additional syntax is needed.
   We need a way to define type operators and a way to create \textit{kinds}.
 
   \subsubsection*{Kinds}
@@ -18,7 +18,6 @@
   pair pair       error
   \end{code}
 
-  \noindent
   \texttt{pair pair} is not a valid type, because type \texttt{pair} has kind \texttt{∗⇒∗⇒∗}.
   It only accepts two types with kind \texttt{∗}.
   Kinds are necessary to prevent these nonsensical types from typechecking.
@@ -30,10 +29,11 @@
   In Meta-Casanova, these expressions are called \texttt{TypeFunc}s, as they operate on types.
 
   \subsubsection*{Modules}
-  \noindent
   Modules in Meta-Casanova are a compile-time mechanism that allows the definition of interfaces.
   It re-uses \texttt{TypeFunc}s to declare new kinds.
-  Let's implement a monad transformer module.
+
+  To illustrate modules, let's implement a monad transformer.
+  We first define the monad transformer interface.
   
   \begin{code}[caption=A generic monad transformer]
   TypeFunc "Monad" ⇒ #\verb|(∗ ⇒ ∗)|# ⇒ Module
@@ -43,10 +43,9 @@
   }
   \end{code}
 
-  \noindent
   Now that we have the interface, let's instantiate an identity monad.
   To use the interface, we first declare a type that fits the first argument.
-  It has kind \texttt{(∗ ⇒ ∗)} and represents the monad that will be transformed.
+  It has kind \verb|(∗ ⇒ ∗)| and represents the monad that will be transformed.
   In case of the identity monad this is trivial.
 
   \begin{code}
@@ -54,7 +53,6 @@
   Id 'a ⇒ 'a
   \end{code}
 
-  \noindent
   The first line declares that we have a new type operator Id that takes a type and returns a type.
   The second line implements it. 
 
@@ -71,11 +69,20 @@
   We have now successfully implemented a monad that does nothing.
   While it might look useless, it is actually used quite often.
   Because, when you pass an identity monad to a monad transformer, you get the corresponding monad.
-  For example: when you pass the identity monad to a state monad transformer, you get a state monad.
-  
+  When you pass the identity monad to a state monad transformer, you get a state monad.
+
+  \pagebreak
   \subsubsection*{Inheritance}
-  Another facet of modules is inheritance.
-  
-  \texttt{inherit} keyword.
-  
+  To enable higher-order subtyping, modules can inherit from each other.
+  This is done with the \verb|Inherit| keyword. 
+  If --for instance-- we want to extend our monad module with Zero, 
+
+  \begin{code}
+  TypeFunc "MonadZero" #\verb|⇒(∗ ⇒ ∗)⇒|#Module
+  MonadZero 'M ⇒ Module {
+    Inherit Monad 'M
+    Func "Zero" → 'a
+  }
+  \end{code}
+
 \end{multicols}

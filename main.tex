@@ -5,9 +5,9 @@
 \usepackage{titlesec} % tune whitespace around headings
 \titlespacing\subsection{0pt}{0.5em}{0.0em}
 \usepackage{fontspec} % allows custom fonts
-%\setmainfont{DejaVu Serif}
 %\setmainfont{Lucida Bright}
-\setmainfont{TeX Gyre Pagella}
+%\setmainfont{TeX Gyre Pagella}
+\setmainfont[BoldFont=DejaVu Sans Bold]{DejaVu Serif}
 \setmonofont{DejaVu Sans Mono}
 
 \usepackage{listings} % allows code listings
@@ -17,7 +17,7 @@
         xleftmargin=15pt, % indent = size of parindent
         gobble=2, % ignore first 2 spaces indents in code listings
         captionpos=b,
-        morekeywords={Func,Data,TypeFunc,Module,TypeAlias,ArrowFunc},
+        morekeywords={Func,Data,TypeFunc,Module,TypeAlias,Inherit},
         keywordstyle=\bfseries,
         escapeinside=\#\# } % non ASCII-characters won't render properly. Use #\verb|contents|#
 \lstnewenvironment{code}[1][]{ % make code unsplittable
@@ -30,6 +30,11 @@
 \addbibresource{references.bib}
 \renewcommand*{\bibfont}{\small} % small references at the end
 
+\usepackage{draftwatermark}
+\SetWatermarkFontSize{40pt}
+\SetWatermarkLightness{0.8}
+\SetWatermarkAngle{0}
+\SetWatermarkVerCenter{5em}
 
 \begin{document}
 \pagestyle{empty} % disable page numbers
