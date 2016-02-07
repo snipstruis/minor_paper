@@ -5,7 +5,9 @@
 \usepackage{titlesec} % tune whitespace around headings
 \titlespacing\subsection{0pt}{0.5em}{0.0em}
 \usepackage{fontspec} % allows custom fonts
-\setmainfont{DejaVu Serif}
+%\setmainfont{DejaVu Serif}
+%\setmainfont{Lucida Bright}
+\setmainfont{TeX Gyre Pagella}
 \setmonofont{DejaVu Sans Mono}
 
 \usepackage{listings} % allows code listings
@@ -17,9 +19,8 @@
         captionpos=b,
         morekeywords={Func,Data,TypeFunc,Module,TypeAlias,ArrowFunc},
         keywordstyle=\bfseries,
-        escapeinside=\#\# }
-% make code unsplittable
-\lstnewenvironment{code}[1][]{
+        escapeinside=\#\# } % non ASCII-characters won't render properly. Use #\verb|contents|#
+\lstnewenvironment{code}[1][]{ % make code unsplittable
    \noindent
    \minipage{\linewidth} 
    \lstset{#1}}
@@ -31,7 +32,7 @@
 
 
 \begin{document}
-\pagestyle{empty}
+\pagestyle{empty} % disable page numbers
 \includepdf[pages=1]{build/cover.pdf}
 \pagebreak
 
@@ -39,6 +40,7 @@
 \tableofcontents
 \pagebreak
 
+% start page numbers
 \setcounter{page}{1}
 \pagenumbering{arabic}
 \pagestyle{plain}
