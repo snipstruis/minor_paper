@@ -66,14 +66,16 @@
   }
   \end{code}
 
+  (TODO:EXPAND)
   We have now successfully implemented a monad that does nothing.
   While it might look useless, it is actually used quite often.
-  Because, when you pass an identity monad to a monad transformer, you get the corresponding monad.
+  When you pass an identity monad to a monad transformer, you get the corresponding monad.
   When you pass the identity monad to a state monad transformer, you get a state monad.
 \end{multicols}
 \pagebreak
 \begin{multicols*}{2}
   \subsubsection*{Inheritance}
+  (TODO: better example)
   Modules can inherit from each other.
   This is done with the \verb|Inherit| keyword. 
   If --for instance-- we want to extend our monad module with Zero,

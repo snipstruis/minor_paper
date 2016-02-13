@@ -12,10 +12,9 @@
   It is possible to combine multiple parsers into a single parser.
   For example: there might be a parser (\texttt{digit}) that can parse a single digit,
   and a parser combinator (\texttt{repeat}) that can apply a parser multiple times until it fails.
-  It is then trivial to combine these into a new parser.
+  It is then trivial to combine these into a new parser that parses multiple digits.
 
   \begin{code}[language=Caml]
-  (* parses multiple digits *)
   let digits = repeat digit
   \end{code}
 

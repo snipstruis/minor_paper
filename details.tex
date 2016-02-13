@@ -32,16 +32,22 @@
   This won't break backward compatibility, since all identifiers in Meta-Casanova need to be unique.
 
   \subsubsection*{Double arrows (⇒)}
-  We choose double arrows for typefuncs to clearly differentiate them from function application(→).
+  We choose double arrows for TypeFuncs to clearly differentiate them from function application(→).
   This distinction is to seperate run-time from compile-time.
 
-  %This is unlike Haskell, where the developers on the GHC mailing list decided to unify types and kinds\footnote{source}.
-  %Unlike Haskell, they unified types and kinds\footnote{source} because there was no need for a distinction there.
+  This is unlike Haskell, it uses single arrows (→).
+  Haskell can do this because it does not have the explicit run-time/compile-time distinction Meta-Casanova has.
 
   \subsubsection*{Typefuncs can have premises}
-  This means that Typefuncs can behave just like rules.
+  This means that TypeFuncs can behave just like rules.
   This also gives us the ability to compute arbitrary expressions at compile-time.
   The only limit is that values can't be passed at compile-time, as that would require dependent types.
+
+  \subsubsection*{TypeAliases}
+  \texttt{TypeAlias} declarations are the mechanism for declaring type-level two-way relationships between kinds.
+  This is analogous to the relationship \texttt{Data} declarations describe between types.
+  TypeAliases enable kind-level pattern-matching in TypeFuncs, essential for making them behave like Funcs.
+
 
 \end{multicols}
 

@@ -1,5 +1,5 @@
 \documentclass[10pt,a4paper]{article}
-\usepackage[driver=xetex,a4paper]{geometry} % propper margins on a4 paper
+\usepackage[driver=xetex,a4paper,twoside]{geometry} % propper margins on a4 paper
 \usepackage{pdfpages} % to include cover
 \usepackage{multicol} % allows multiple colums
 \usepackage{titlesec} % tune whitespace around headings
@@ -39,11 +39,12 @@
 \begin{document}
 \pagestyle{empty} % disable page numbers
 \includepdf[pages=1]{build/cover.pdf}
-\pagebreak
+\newpage
+\mbox{}
+\newpage
 
-\input{abstract}
 \tableofcontents
-\pagebreak
+\input{abstract}
 
 % start page numbers
 \setcounter{page}{1}
@@ -51,6 +52,7 @@
 \pagestyle{plain}
 \input{intro}
 \pagebreak
+
 
 \input{problem}
 \pagebreak
