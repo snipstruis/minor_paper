@@ -13,8 +13,8 @@
   int             ∗
   float           ∗
   pair            ∗ ⇒ ∗ ⇒ ∗
-  int pair        ∗ ⇒ ∗ 
-  float int pair  ∗
+  pair int        ∗ ⇒ ∗ 
+  pair float int  ∗
   pair pair       error
   \end{code}
 
@@ -32,10 +32,10 @@
   Modules in Meta-Casanova are a compile-time mechanism that allows the definition of interfaces.
   It re-uses \texttt{TypeFunc}s to declare new kinds.
 
-  To illustrate modules, let's implement a monad transformer.
-  We first define the monad transformer interface.
+  To illustrate modules, let's implement a generic monad.
+  We first define the monad interface.
   
-  \begin{code}[caption=A generic monad transformer]
+  \begin{code}
   TypeFunc "Monad" ⇒ #\verb|(∗ ⇒ ∗)|# ⇒ Module
   Monad 'M ⇒ Module {
     Func 'a →">>=" → ('a →'M 'b) →'M 'b
@@ -45,7 +45,7 @@
 
   Now that we have the interface, let's instantiate an identity monad.
   To use the interface, we first declare a type that fits the first argument.
-  It has kind \verb|(∗ ⇒ ∗)| and represents the monad that will be transformed.
+  It has kind \verb|(∗ ⇒ ∗)| and represents the monad constructor.
   In case of the identity monad this is trivial.
 
   \begin{code}
@@ -70,19 +70,22 @@
   While it might look useless, it is actually used quite often.
   Because, when you pass an identity monad to a monad transformer, you get the corresponding monad.
   When you pass the identity monad to a state monad transformer, you get a state monad.
-
-  \pagebreak
+\end{multicols}
+\pagebreak
+\begin{multicols*}{2}
   \subsubsection*{Inheritance}
-  To enable higher-order subtyping, modules can inherit from each other.
+  Modules can inherit from each other.
   This is done with the \verb|Inherit| keyword. 
-  If --for instance-- we want to extend our monad module with Zero, 
+  If --for instance-- we want to extend our monad module with Zero,
+  we can define a new module MonadZero that inherits from Monad.
 
   \begin{code}
   TypeFunc "MonadZero" #\verb|⇒(∗ ⇒ ∗)⇒|#Module
-  MonadZero 'M ⇒ Module {
-    Inherit Monad 'M
+  MonadZero ⇒ Monad 'M {
     Func "Zero" → 'a
   }
   \end{code}
 
-\end{multicols}
+  This way, we have easily extended Monad.
+  All functions that operate on monads can operate on things derived from monads.
+\end{multicols*}

@@ -52,11 +52,14 @@
   Monad transformers are \textit{type operators} (type-level functions) that takes a monad, and returns a combined monad.
   For example: if we pass the identity monad to the state monad transformer, we get a state monad.
 
-  \subsubsection*{Towards $F^\omega_{<:}$}
-  Now that it is clear why monad-transformers are desirable, let's find out what type system we need to support them.
-  In order to have typeclasses like monads, we need subtyping($\lambda_{<:}$)\footcite[Chapter~15]{Pierce02}.
-  And in order to have type operators, we need higher-order polymorphism ($F_\omega$).\footcite[Chapter~30]{Pierce02}.
-  Combining these two, we get higher-order subtyping ($F^\omega_{<:}$)\footcite[Chapter~31]{Pierce02}.
-
-  (closing/bridge paragraph here)
+  \subsubsection*{Towards $F_\omega$}
+  In order to have type operators, we need higher-order polymorphism.
+  The formal name for a type system that supports higher-order polymorphism, System-F$_\omega$.\footcite[Chapter~30]{Pierce02}
+  
+  %Now that it is clear why monad-transformers are desirable, let's find out what type system we need to support them.
+  %In order to have typeclasses like monads, we need subtyping($\lambda_{<:}$)\footcite[Chapter~15]{Pierce02}.
+  %And in order to have type operators, we need higher-order polymorphism ($F_\omega$).\footcite[Chapter~30]{Pierce02}.
+  %Combining these two, we get higher-order subtyping ($F^\omega_{<:}$)\footcite[Chapter~31]{Pierce02}.
+  %It is this $F^\omega_{<:}$ that we will implement.
+  
 \end{multicols}

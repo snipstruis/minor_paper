@@ -7,22 +7,42 @@
   TypeFuncs were designed to be consistent with the already existing Funcs.
   This has a few implications:
 
-  \subsubsection*{Everything curries}
-  Everything curries because it was the most consistent from a language perspective.
-  This also gives the compiler a uniform way to handle application.
+  \subsubsection*{TypeFuncs curry}
+  like Funcs, TypeFuncs curry.
+
+  Currying enables partially application.
+  For example, imagine we have a state monad.
   
-  \subsubsection*{Typefuncs can have premises}
-  Maximum expressivity. (TODO: use case here)
-  General and consistent system that works everywhere.
+  \begin{code}
+  TypeFunc "StateMonad" ⇒ ∗ ⇒ ∗ ⇒ ∗
+  \end{code}
 
-  \subsubsection*{Double arrows (⇒)}
-  Double arrows to clearly differentiate run-time from compile-time.
-  Unlike Haskell (they unified types and kinds)\footnote{source}
+  \noindent Where the first argument represents the state type and the second the return type.
+  This means you can define a new state monad that already has its state-type specified by writing \verb|Monad(StateMonad int)|.
 
+  It also gives the compiler a uniform way to handle type and function application,
+  so this feature increases orthogonality while not increasing compiler complexity.
+  
   \subsubsection*{Dependent Types}
+  Dependent types are types that depend on terms, and are currently not supported by Meta-Casanova.
+  An example for this is the constant-length array, where the length of the array is embedded into the type at compile-time.
+  
   A future inclusion of dependent types is possible.
   It would mean that the type namespace will be merged into the module namespace.
-  This won't break backward compatibility, since identifiers need to be unique.
+  This won't break backward compatibility, since all identifiers in Meta-Casanova need to be unique.
+
+  \subsubsection*{Double arrows (⇒)}
+  We choose double arrows for typefuncs to clearly differentiate them from function application(→).
+  This distinction is to seperate run-time from compile-time.
+
+  %This is unlike Haskell, where the developers on the GHC mailing list decided to unify types and kinds\footnote{source}.
+  %Unlike Haskell, they unified types and kinds\footnote{source} because there was no need for a distinction there.
+
+  \subsubsection*{Typefuncs can have premises}
+  This means that Typefuncs can behave just like rules.
+  This also gives us the ability to compute arbitrary expressions at compile-time.
+  The only limit is that values can't be passed at compile-time, as that would require dependent types.
+
 \end{multicols}
 
 \pagebreak
@@ -32,20 +52,26 @@
   This has a few implications:
 
   \subsubsection*{Scope contents}
-  Scopes mainly consist of \texttt{Func} declarations, but can also be used for other things.
+  Scopes mainly consist of \texttt{Func} declarations, but can be used for everything.
+  They are equivalent to top-level scope. (TODO: citation needed) 
+  We choose not to artificially limit the scope to maximize expressivity.
 
   \subsubsection*{Modules declare new kinds}
   Simplest solution was to reuse the \texttt{TypeFunc} system for compile-time tasks.
-  Possible problem in future with Dependent types: kind name space will then consist of module names and type names.
+  Kinds are a compile-time mechanism, and TypeFuncs are used for all compile-time tasks.
+  (TODO: find more arguments)
 
   \subsubsection*{Inheritance propegation}
   difference between imports and inherits.
+  Inherit only imports target, not the things the target inherits.
+  This means the namespace remains clean. (TODO: fact-check)
 
   \subsubsection*{Modules can have premises}
   'cause why not. (TODO: find simple usecase)
 
   \subsubsection*{Module inheritance vs composition}
   monad class; zero class; type monadZero ∈ monad, zero.
+  (TODO: good arguments for inheritance)
 
 \end{multicols}
 
