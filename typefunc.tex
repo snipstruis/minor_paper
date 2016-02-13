@@ -1,6 +1,3 @@
-\section{Details}
-\input{metacasanova}
-
 \subsection{TypeFunc Details}
 TypeFuncs were designed to be consistent with the already existing Funcs.
 This has a few implications:
@@ -45,32 +42,3 @@ The only limit is that values can't be passed at compile-time, as that would req
 \texttt{TypeAlias} declarations are the mechanism for declaring type-level two-way relationships between kinds.
 This is analogous to the relationship \texttt{Data} declarations describe between types.
 TypeAliases enable kind-level pattern-matching in TypeFuncs, essential for making them behave like Funcs.
-
-
-\subsection{Module Details}
-Modules were designed to be as flexible as possible.
-This has a few implications:
-
-\subsubsection*{Scope contents}
-Scopes mainly consist of \texttt{Func} declarations, but can be used for everything.
-They are equivalent to top-level scope. (TODO: citation needed) 
-We choose not to artificially limit the scope to maximize expressivity.
-
-\subsubsection*{Modules declare new kinds}
-Simplest solution was to reuse the \texttt{TypeFunc} system for compile-time tasks.
-Kinds are a compile-time mechanism, and TypeFuncs are used for all compile-time tasks.
-(TODO: find more arguments)
-
-\subsubsection*{Inheritance propegation}
-difference between imports and inherits.
-Inherit only imports target, not the things the target inherits.
-This means the namespace remains clean. (TODO: fact-check)
-
-\subsubsection*{Modules can have premises}
-'cause why not. (TODO: find simple usecase)
-
-\subsubsection*{Module inheritance vs composition}
-monad class; zero class; type monadZero ∈ monad, zero.
-(TODO: good arguments for inheritance)
-
-
