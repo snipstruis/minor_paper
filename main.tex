@@ -1,9 +1,10 @@
 \documentclass[10pt,a4paper]{article}
 \usepackage[driver=xetex,a4paper]{geometry} % propper margins on a4 paper
 \usepackage{pdfpages} % to include cover
+\usepackage[hidelinks]{hyperref} % make contents and references clickable in pdf
 \usepackage{multicol} % allows multiple colums
-\usepackage{titlesec} % tune whitespace around headings
-%\titlespacing\subsection{0pt}{0.5em}{0.0em}
+\usepackage{titlesec} % adjust whitespace around headings and improves placing
+\usepackage{microtype} % adjusts kerning and letterspacing
 \usepackage{fontspec} % allows custom fonts
 \setmainfont[BoldFont=DejaVu Sans Bold]{DejaVu Serif}
 \setmonofont{DejaVu Sans Mono}
@@ -24,7 +25,7 @@
    \lstset{#1}}
    {\endminipage}
 
-\usepackage[style=verbose,backend=biber]{biblatex} %citations
+\usepackage[sorting=none,backend=biber]{biblatex} %citations
 \addbibresource{references.bib}
 \renewcommand*{\bibfont}{\small} % small references at the end
 
@@ -35,26 +36,29 @@
 %\SetWatermarkVerCenter{5em}
 
 \begin{document}
-\pagestyle{empty} % disable page numbers
+% disable page numbers
+\pagestyle{empty} 
+
+% cover page
 \includepdf[pages=1]{build/cover.pdf}
 \newpage
-
-%\input{abstract}
 
 % start page numbers
 \setcounter{page}{1}
 \pagenumbering{arabic}
 \pagestyle{plain}
 
+% actual document
 \begin{multicols}{2}
+\input{abstract}
 \tableofcontents
 \input{intro}
 \input{problem}
 \input{idea}
 \section{Details}
-\input{metacasanova}
-\input{typefunc}
-\input{module}
+  \input{metacasanova}
+  \input{typefunc}
+  \input{module}
 \input{related}
 \end{multicols}
 \printbibliography

@@ -3,7 +3,7 @@
   We need a way to define type operators and a way to create \textit{kinds}.
 
   \subsubsection*{Kinds}
-  Kinds are to types as types are to terms.\footcite[Chapter~30]{Pierce02}
+  Kinds are to types as types are to terms.\cite[Chapter~30]{Pierce02}
   They are ``one level up'' from types.
   The most used kind is \texttt{∗} (pronounced ``type'') and represents all proper types.
   Type operators are indicated with \texttt{⇒} to differentiate them from type-signatures (\texttt{→}).
@@ -65,12 +65,14 @@
   }
   \end{code}
 
-  (TODO:EXPAND)
   We have now successfully implemented a monad that does nothing.
   While it might look useless, it is actually used quite often.
   When you pass an identity monad to a monad transformer, you get the corresponding monad.
   When you pass the identity monad to a state monad transformer, you get a state monad.
 
+  In fact, when using monad transformers, the identity monad forms the foundation of every monad.
+  At the end of the chain of monad transformers, there is always an identity monad where all those transformations are applied to.
+  
   \subsubsection*{Inheritance}
   (TODO: better example)
   Modules can inherit from each other.
