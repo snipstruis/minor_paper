@@ -1,84 +1,76 @@
 \section{Details}
 \input{metacasanova}
-\pagebreak
 
 \subsection{TypeFunc Details}
-\begin{multicols}{2}\noindent
-  TypeFuncs were designed to be consistent with the already existing Funcs.
-  This has a few implications:
+TypeFuncs were designed to be consistent with the already existing Funcs.
+This has a few implications:
 
-  \subsubsection*{TypeFuncs curry}
-  like Funcs, TypeFuncs curry.
+\subsubsection*{TypeFuncs curry}
+like Funcs, TypeFuncs curry.
 
-  Currying enables partially application.
-  For example, imagine we have a state monad.
-  
-  \begin{code}
+Currying enables partially application.
+For example, imagine we have a state monad.
+
+\begin{code}
   TypeFunc "StateMonad" ⇒ ∗ ⇒ ∗ ⇒ ∗
-  \end{code}
+\end{code}
 
-  \noindent Where the first argument represents the state type and the second the return type.
-  This means you can define a new state monad that already has its state-type specified by writing \verb|Monad(StateMonad int)|.
+\noindent Where the first argument represents the state type and the second the return type.
+This means you can define a new state monad that already has its state-type specified by writing \verb|Monad(StateMonad int)|.
 
-  It also gives the compiler a uniform way to handle type and function application,
-  so this feature increases orthogonality while not increasing compiler complexity.
-  
-  \subsubsection*{Dependent Types}
-  Dependent types are types that depend on terms, and are currently not supported by Meta-Casanova.
-  An example for this is the constant-length array, where the length of the array is embedded into the type at compile-time.
-  
-  A future inclusion of dependent types is possible.
-  It would mean that the type namespace will be merged into the module namespace.
-  This won't break backward compatibility, since all identifiers in Meta-Casanova need to be unique.
+It also gives the compiler a uniform way to handle type and function application,
+so this feature increases orthogonality while not increasing compiler complexity.
 
-  \subsubsection*{Double arrows (⇒)}
-  We choose double arrows for TypeFuncs to clearly differentiate them from function application(→).
-  This distinction is to seperate run-time from compile-time.
+\subsubsection*{Dependent Types}
+Dependent types are types that depend on terms, and are currently not supported by Meta-Casanova.
+An example for this is the constant-length array, where the length of the array is embedded into the type at compile-time.
 
-  This is unlike Haskell, it uses single arrows (→).
-  Haskell can do this because it does not have the explicit run-time/compile-time distinction Meta-Casanova has.
+A future inclusion of dependent types is possible.
+It would mean that the type namespace will be merged into the module namespace.
+This won't break backward compatibility, since all identifiers in Meta-Casanova need to be unique.
 
-  \subsubsection*{Typefuncs can have premises}
-  This means that TypeFuncs can behave just like rules.
-  This also gives us the ability to compute arbitrary expressions at compile-time.
-  The only limit is that values can't be passed at compile-time, as that would require dependent types.
+\subsubsection*{Double arrows (⇒)}
+We choose double arrows for TypeFuncs to clearly differentiate them from function application(→).
+This distinction is to seperate run-time from compile-time.
 
-  \subsubsection*{TypeAliases}
-  \texttt{TypeAlias} declarations are the mechanism for declaring type-level two-way relationships between kinds.
-  This is analogous to the relationship \texttt{Data} declarations describe between types.
-  TypeAliases enable kind-level pattern-matching in TypeFuncs, essential for making them behave like Funcs.
+This is unlike Haskell, it uses single arrows (→).
+Haskell can do this because it does not have the explicit run-time/compile-time distinction Meta-Casanova has.
+
+\subsubsection*{Typefuncs can have premises}
+This means that TypeFuncs can behave just like rules.
+This also gives us the ability to compute arbitrary expressions at compile-time.
+The only limit is that values can't be passed at compile-time, as that would require dependent types.
+
+\subsubsection*{TypeAliases}
+\texttt{TypeAlias} declarations are the mechanism for declaring type-level two-way relationships between kinds.
+This is analogous to the relationship \texttt{Data} declarations describe between types.
+TypeAliases enable kind-level pattern-matching in TypeFuncs, essential for making them behave like Funcs.
 
 
-\end{multicols}
-
-\pagebreak
 \subsection{Module Details}
-\begin{multicols}{2}\noindent
-  Modules were designed to be as flexible as possible.
-  This has a few implications:
+Modules were designed to be as flexible as possible.
+This has a few implications:
 
-  \subsubsection*{Scope contents}
-  Scopes mainly consist of \texttt{Func} declarations, but can be used for everything.
-  They are equivalent to top-level scope. (TODO: citation needed) 
-  We choose not to artificially limit the scope to maximize expressivity.
+\subsubsection*{Scope contents}
+Scopes mainly consist of \texttt{Func} declarations, but can be used for everything.
+They are equivalent to top-level scope. (TODO: citation needed) 
+We choose not to artificially limit the scope to maximize expressivity.
 
-  \subsubsection*{Modules declare new kinds}
-  Simplest solution was to reuse the \texttt{TypeFunc} system for compile-time tasks.
-  Kinds are a compile-time mechanism, and TypeFuncs are used for all compile-time tasks.
-  (TODO: find more arguments)
+\subsubsection*{Modules declare new kinds}
+Simplest solution was to reuse the \texttt{TypeFunc} system for compile-time tasks.
+Kinds are a compile-time mechanism, and TypeFuncs are used for all compile-time tasks.
+(TODO: find more arguments)
 
-  \subsubsection*{Inheritance propegation}
-  difference between imports and inherits.
-  Inherit only imports target, not the things the target inherits.
-  This means the namespace remains clean. (TODO: fact-check)
+\subsubsection*{Inheritance propegation}
+difference between imports and inherits.
+Inherit only imports target, not the things the target inherits.
+This means the namespace remains clean. (TODO: fact-check)
 
-  \subsubsection*{Modules can have premises}
-  'cause why not. (TODO: find simple usecase)
+\subsubsection*{Modules can have premises}
+'cause why not. (TODO: find simple usecase)
 
-  \subsubsection*{Module inheritance vs composition}
-  monad class; zero class; type monadZero ∈ monad, zero.
-  (TODO: good arguments for inheritance)
-
-\end{multicols}
+\subsubsection*{Module inheritance vs composition}
+monad class; zero class; type monadZero ∈ monad, zero.
+(TODO: good arguments for inheritance)
 
 

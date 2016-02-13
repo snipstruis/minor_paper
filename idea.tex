@@ -1,5 +1,4 @@
 \section{The Idea}
-\begin{multicols}{2}\noindent
   In order to provide the typesystem we require, additional syntax is needed.
   We need a way to define type operators and a way to create \textit{kinds}.
 
@@ -71,9 +70,7 @@
   While it might look useless, it is actually used quite often.
   When you pass an identity monad to a monad transformer, you get the corresponding monad.
   When you pass the identity monad to a state monad transformer, you get a state monad.
-\end{multicols}
-\pagebreak
-\begin{multicols*}{2}
+
   \subsubsection*{Inheritance}
   (TODO: better example)
   Modules can inherit from each other.
@@ -90,4 +87,3 @@
 
   This way, we have easily extended Monad.
   All functions that operate on monads can operate on things derived from monads.
-\end{multicols*}

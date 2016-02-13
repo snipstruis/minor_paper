@@ -1,12 +1,10 @@
 \documentclass[10pt,a4paper]{article}
-\usepackage[driver=xetex,a4paper,twoside]{geometry} % propper margins on a4 paper
+\usepackage[driver=xetex,a4paper]{geometry} % propper margins on a4 paper
 \usepackage{pdfpages} % to include cover
 \usepackage{multicol} % allows multiple colums
 \usepackage{titlesec} % tune whitespace around headings
-\titlespacing\subsection{0pt}{0.5em}{0.0em}
+%\titlespacing\subsection{0pt}{0.5em}{0.0em}
 \usepackage{fontspec} % allows custom fonts
-%\setmainfont{Lucida Bright}
-%\setmainfont{TeX Gyre Pagella}
 \setmainfont[BoldFont=DejaVu Sans Bold]{DejaVu Serif}
 \setmonofont{DejaVu Sans Mono}
 
@@ -40,26 +38,21 @@
 \pagestyle{empty} % disable page numbers
 \includepdf[pages=1]{build/cover.pdf}
 \newpage
-\mbox{}
-\newpage
 
-\tableofcontents
-\input{abstract}
+%\input{abstract}
 
 % start page numbers
 \setcounter{page}{1}
 \pagenumbering{arabic}
 \pagestyle{plain}
+
+\begin{multicols}{2}
+\tableofcontents
 \input{intro}
-\pagebreak
-
-
 \input{problem}
-\pagebreak
 \input{idea}
-\pagebreak
 \input{details}
-\pagebreak
 \input{related}
+\end{multicols}
 \printbibliography
 \end{document}
