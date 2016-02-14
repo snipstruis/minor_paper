@@ -41,7 +41,7 @@
   \begin{code}[language=Caml]
   type Parser<'char,'ctxt,'result> =
     State<List<'char>*'ctxt,
-          Either<result,'error>>
+          Either<'result,'error>>
   \end{code}
 
   Combining monads by hand is tedious and non-trivial.
