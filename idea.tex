@@ -49,7 +49,7 @@ In case of the identity monad this is trivial.
 
 \begin{code}
   TypeFunc "IdCons" ⇒ ∗ ⇒ ∗
-  Id 'a ⇒ 'a
+  IdCons 'a ⇒ 'a
 \end{code}
 
 The first line declares that we have a new type operator Id that takes a type and returns a type.
@@ -82,7 +82,7 @@ we can define a new module MonadZero that inherits from Monad.
 \begin{code}
   TypeFunc "Zero" ⇒ Module
   Zero ⇒ Module {
-    Func "Zero" → 'a
+    Func "zero" → 'a
   }
 
   TypeFunc "MonadZero" ⇒ #\verb|(∗⇒∗)|# ⇒ Module
