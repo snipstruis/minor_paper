@@ -1,91 +1,98 @@
 \section{The Idea}
-  In order to provide the typesystem we require, additional syntax is needed.
-  We need a way to define type operators and a way to create \textit{kinds}.
+In order to provide the typesystem we require, additional syntax is needed.
+We need a way to define type operators and a way to create \textit{kinds}.
 
-  \subsubsection*{Kinds}
-  Kinds are to types as types are to terms.\cite[Chapter~30]{Pierce02}
-  They are ``one level up'' from types.
-  The most used kind is \texttt{∗} (pronounced ``type'') and represents all proper types.
-  Type operators are indicated with \texttt{⇒} to differentiate them from type-signatures (\texttt{→}).
-  For example a few types with their respective kinds:
-  \begin{code}
+\subsubsection*{Kinds}
+Kinds are to types as types are to terms.\cite[Chapter~30]{Pierce02}
+They are ``one level up'' from types.
+The most used kind is \texttt{∗} (pronounced ``type'') and represents all proper types.
+Type operators are indicated with \texttt{⇒} to differentiate them from type-signatures (\texttt{→}).
+For example a few types with their respective kinds:
+\begin{code}
   int             ∗
   float           ∗
   pair            ∗ ⇒ ∗ ⇒ ∗
   pair int        ∗ ⇒ ∗ 
   pair float int  ∗
   pair pair       error
-  \end{code}
+\end{code}
 
-  \texttt{pair pair} is not a valid type, because type \texttt{pair} has kind \texttt{∗⇒∗⇒∗}.
-  It only accepts two types with kind \texttt{∗}.
-  Kinds are necessary to prevent these nonsensical types from typechecking.
+\texttt{pair pair} is not a valid type, because type \texttt{pair} has kind \texttt{∗⇒∗⇒∗}.
+It only accepts two types with kind \texttt{∗}.
+Kinds are necessary to prevent these nonsensical types from typechecking.
 
-  Kinds --unlike types-- have no run-time representation.
-  They don't need it, they are only executed at compile-time to check the validity of the types.
+Kinds --unlike types-- have no run-time representation.
+They don't need it, they are only executed at compile-time to check the validity of the types.
 
-  This property of kinds can be used to compute arbitrary expressions at compile-time.
-  In Meta-Casanova, these expressions are called \texttt{TypeFunc}s, as they operate on types.
+This property of kinds can be used to compute arbitrary expressions at compile-time.
+In Meta-Casanova, these expressions are called \texttt{TypeFunc}s, as they operate on types.
 
-  \subsubsection*{Modules}
-  Modules in Meta-Casanova are a compile-time mechanism that allows the definition of interfaces.
-  It re-uses \texttt{TypeFunc}s to declare new kinds.
+\subsubsection*{Modules}
+Modules in Meta-Casanova are a compile-time mechanism that allows the definition of interfaces.
+It re-uses \texttt{TypeFunc}s to declare new kinds.
 
-  To illustrate modules, let's implement a generic monad.
-  We first define the monad interface.
-  
-  \begin{code}
+To illustrate modules, let's implement a generic monad.
+We first define the monad interface.
+
+\begin{code}
   TypeFunc "Monad" ⇒ #\verb|(∗ ⇒ ∗)|# ⇒ Module
   Monad 'M ⇒ Module {
     Func 'a →">>=" → ('a →'M 'b) →'M 'b
     Func "return" →'a →'M 'a
   }
-  \end{code}
+\end{code}
 
-  Now that we have the interface, let's instantiate an identity monad.
-  To use the interface, we first declare a type that fits the first argument.
-  It has kind \verb|(∗ ⇒ ∗)| and represents the monad constructor.
-  In case of the identity monad this is trivial.
+Now that we have the interface, let's instantiate an identity monad.
+To use the interface, we first declare a type that fits the first argument.
+It has kind \verb|(∗ ⇒ ∗)| and represents the monad constructor.
+In case of the identity monad this is trivial.
 
-  \begin{code}
+\begin{code}
   TypeFunc "IdCons" ⇒ ∗ ⇒ ∗
   Id 'a ⇒ 'a
-  \end{code}
+\end{code}
 
-  The first line declares that we have a new type operator Id that takes a type and returns a type.
-  The second line implements it. 
+The first line declares that we have a new type operator Id that takes a type and returns a type.
+The second line implements it. 
 
-  To instantiate the interface we create a type operator that takes no arguments and gives us a Monad.
-  
-  \begin{code}
+To instantiate the interface we create a type operator that takes no arguments and gives us a Monad.
+
+\begin{code}
   TypeFunc "id" ⇒ Monad 
   id ⇒ Monad IdCons {
     x >>= k → k x
     return x → x
   }
-  \end{code}
+\end{code}
 
-  We have now successfully implemented a monad that does nothing.
-  While it might look useless, it is actually used quite often.
-  When you pass an identity monad to a monad transformer, you get the corresponding monad.
-  When you pass the identity monad to a state monad transformer, you get a state monad.
+We have now successfully implemented a monad that does nothing.
+While it might look useless, it is actually used quite often.
+When you pass an identity monad to a monad transformer, you get the corresponding monad.
+When you pass the identity monad to a state monad transformer, you get a state monad.
 
-  In fact, when using monad transformers, the identity monad forms the foundation of every monad.
-  At the end of the chain of monad transformers, there is always an identity monad where all those transformations are applied to.
-  
-  \subsubsection*{Inheritance}
-  (TODO: better example)
-  Modules can inherit from each other.
-  This is done with the \verb|Inherit| keyword. 
-  If --for instance-- we want to extend our monad module with Zero,
-  we can define a new module MonadZero that inherits from Monad.
+In fact, when using monad transformers, the identity monad forms the foundation of every monad.
+At the end of the chain of monad transformers, there is always an identity monad where all those transformations are applied to.
 
-  \begin{code}
-  TypeFunc "MonadZero" #\verb|⇒(∗ ⇒ ∗)⇒|#Module
-  MonadZero ⇒ Monad 'M {
+\subsubsection*{Inheritance}
+Modules can inherit from each other.
+This is done with the \verb|Inherit| keyword. 
+If --for instance-- we want to extend our monad module with Zero,
+we can define a new module MonadZero that inherits from Monad.
+
+\begin{code}
+  TypeFunc "Zero" ⇒ Module
+  Zero ⇒ Module {
     Func "Zero" → 'a
   }
-  \end{code}
 
-  This way, we have easily extended Monad.
-  All functions that operate on monads can operate on things derived from monads.
+  TypeFunc "MonadZero" ⇒ #\verb|(∗⇒∗)|# ⇒ Module
+  MonadZero 'M ⇒ Module {
+    Inherit Monad 'M
+    Inherit Zero
+  }
+\end{code}
+
+This way, we have easily extended Monad to have a zero.
+Now MonadZero can behave like a monad, a `something' with a zero, and a monad with a zero.
+In case of monads, having a zero often useful.
+In F\# for example, defining a zero to a monad means you can omit the else-branch in an if-statement.

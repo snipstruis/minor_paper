@@ -20,8 +20,22 @@ Import statements don't import recursively.
 This is to prevent the namespace getting cluttered with dependencies.
 
 \subsubsection*{Modules can have premises}
-'cause why not. (TODO: find simple usecase)
+Modules can have premises just like Funcs and TypeFuncs.
+This means you can arbitrarily manipulate the input arguments for maximum expressiveness.
+Again the restriction here is the inability to pass term-level arguments to modules, as that would require dependent types.
 
-\subsubsection*{Module inheritance vs composition}
-monad class; zero class; type monadZero ∈ monad, zero.
-(TODO: good arguments for inheritance)
+\subsubsection*{Inheritance vs composition}
+Meta-Casanova uses an inheritance-based approach as opposed to a composition-based approach.
+
+In the inheritance-based approach, kinds inherit from each other and the users of the kinds only accept one specific kind.
+In the case of MonadZero, MonadZero inherits from Monad and Zero, and Funcs written for MonadZero \textit{only} accept MonadZero or derivatives.
+
+In the composition-based approach, kinds do not inherit from each other, and the users of the kinds accept a range of kinds.
+In the case of MonadZero, there would only be a Monad module and a Zero module and the Funcs that needed both would specify that in their signature.
+
+Both strategies have their merits and are used in programming languages successfully.
+The advantage of a composition-based approach is that you only have to specify the building blocks,
+and don't have to specify all the combinations.
+The advantage of a inheritance-based approach is that you can add special behavior to your modules.
+
+Because flexibility is the main concern, Meta-Casanova uses inheritance.
