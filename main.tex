@@ -5,9 +5,11 @@
 \usepackage{multicol} % allows multiple colums
 \usepackage{titlesec} % adjust whitespace around headings and improves placing
 \usepackage{microtype} % adjusts kerning and letterspacing
+\usepackage{soul} %striketrough
 \usepackage{fontspec} % allows custom fonts
 \setmainfont[BoldFont=DejaVu Sans Bold]{DejaVu Serif}
 \setmonofont{DejaVu Sans Mono}
+
 
 \usepackage{listings} % allows code listings
 \lstset{basicstyle=\footnotesize\ttfamily,
@@ -16,7 +18,7 @@
         xleftmargin=15pt, % indent = size of parindent
         gobble=2, % ignore first 2 spaces indents in code listings
         captionpos=b,
-        morekeywords={Func,Data,TypeFunc,Module,TypeAlias,Inherit},
+        morekeywords={Func,Data,TypeFunc,Module,TypeAlias,Inherit,is},
         keywordstyle=\bfseries,
         escapeinside=\#\# } % non ASCII-characters won't render properly. Use #\verb|contents|#
 \lstnewenvironment{code}[1][]{ % make code unsplittable
