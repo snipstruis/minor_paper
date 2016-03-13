@@ -9,7 +9,7 @@ They are equivalent to top-level scope\footnote{Except for \texttt{import} state
 We choose not to artificially limit the scope to maximize expressivity.
 
 \subsubsection*{Modules declare new kinds}
-Simplest solution was to reuse the \texttt{TypeFunc} system for compile-time tasks.
+The simplest solution was to reuse the \texttt{TypeFunc} system for compile-time tasks.
 Kinds are a compile-time mechanism, and TypeFuncs are used for all compile-time tasks.
 
 \subsubsection*{Inheritance propegation}
@@ -19,10 +19,11 @@ This is different from the way imports work.
 Import statements don't import recursively.
 This is to prevent the namespace getting cluttered with dependencies.
 
-\subsubsection*{Modules can have premises}
+\subsubsection*{Module premises}
 Modules can have premises just like Funcs and TypeFuncs.
-This means you can arbitrarily manipulate the input arguments for maximum expressiveness.
+This means you can arbitrarily manipulate the input arguments.
 Again the restriction here is the inability to pass term-level arguments to modules, as that would require dependent types.
+% TODO: EXAMPLE
 
 \subsubsection*{Inheritance vs composition}
 Meta-Casanova uses an inheritance-based approach as opposed to a composition-based approach.

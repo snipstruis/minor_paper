@@ -18,14 +18,6 @@ This means you can define a new state monad that already has its state-type spec
 It also gives the compiler a uniform way to handle type and function application,
 so this feature increases orthogonality while not increasing compiler complexity.
 
-\subsubsection*{Dependent Types}
-Dependent types are types that depend on terms, and are currently not supported by Meta-Casanova.
-An example for this is the constant-length array, where the length of the array is embedded into the type at compile-time.
-
-A future inclusion of dependent types is possible.
-It would mean that the type namespace will be merged into the module namespace.
-This won't break backward compatibility, since all identifiers in Meta-Casanova need to be unique.
-
 \subsubsection*{Double arrows (⇒)}
 We choose double arrows for TypeFuncs to clearly differentiate them from function application(→).
 This distinction is to seperate run-time from compile-time.
@@ -33,10 +25,11 @@ This distinction is to seperate run-time from compile-time.
 This is unlike Haskell, it uses single arrows (→).
 Haskell can do this because it does not have the explicit run-time/compile-time distinction Meta-Casanova has.
 
-\subsubsection*{Typefuncs can have premises}
-This means that TypeFuncs can behave just like rules.
-This also gives us the ability to compute arbitrary expressions at compile-time.
+\subsubsection*{Typefunc premises}
+Typefuncs can have premises, just like rules.
+This means that TypeFuncs can behave just like rules and can compute arbitrary expressions at compile-time.
 The only limit is that values can't be passed at compile-time, as that would require dependent types.
+% TODO: EXAMPLE
 
 \subsubsection*{TypeAliases}
 \texttt{TypeAlias} declarations are the mechanism for declaring type-level two-way relationships between kinds.

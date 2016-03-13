@@ -1,11 +1,15 @@
 \section{The Problem}
   The goal of this paper is to extend Meta-Casanova's typesystem to the point where it can handle monad-transformers.
-  To see why, we begin with a brief overview of monadic parsing.
+  In this section we present an extention of the type system of Meta-Casanova.
+  We start by giving an overview of monadic parsers,
+  then we move on to monad transformers,
+  and we conclude with a look at what typesystem we need.
   
   \subsubsection*{Monadic Parsing}
   Parser monads are a useful tool for writing compilers.
-  They are not only useful in the lexing stage,
-  as they can be used for interpreting intermediate representations.
+  They are not only useful in the lexing stage, as they can be used for parsing intermediate representations.
+  Such intermediate representations appear between different sections of the compiler and are often tree-like.
+  An example would be the typechecker, which has to parse the abstract syntax tree from the front-end.
 
   The best aspect about monadic parsing is that it is \textit{composable}.
   It is possible to combine multiple parsers into a single parser.
@@ -18,6 +22,9 @@
   \end{code}
 
   A parser is a function that takes an input stream and a context and returns a result.
+  The input stream is a sequence of characters that has yet to be parsed.
+  The context is the state that is kept and modified during the parsing.
+  The result is either the succesful outcome of the parser, or an error message.
   A generic implementation may look like this.
 
   \begin{code}[language=Caml]
@@ -26,7 +33,7 @@
       -> Result<'char,'ctxt,'result>
   \end{code}
   
-  The Result contains ---if the parser was successful--- the value returned by the parser, the modified context, and the new input stream position.
+  The Result contains --if the parser was successful-- the value returned by the parser, the modified context, and the new input stream position.
   
   \begin{code}[language=Caml]
   type Result<'char,'ctxt,'result> = 
@@ -48,11 +55,48 @@
   Luckily there is a way to automate the process: monad transformers.\cite[Chapter~18]{Haskell}
 
   Monad transformers are \textit{type operators} (type-level functions) that takes a monad, and returns a combined monad.
-  For example: if we pass the identity monad to the state monad transformer, we get a state monad.
+  For example:
+  if we pass the identity monad to the either monad transformer, we get an either monad.
+  If we then pass the result monad to a state monad transformer, we get a result monad that can hold state.
+  If we assign a list of input characters and a context to the state, we have constructed a generic parser monad.
+
+  In a hypothetical language where we could write this, it woult look like this:
+  
+  \begin{code}[language=Caml]
+    type ParserM = StateT (ResultT IdM)
+  \end{code}
+  
+ Where as writing one by hand would require the type definitions, as well as the implementation \verb|return| and \verb|>>=|.
+
+  \begin{code}[language=Caml]
+  type Result<'char,'ctxt,'result> = 
+    | Done  of 'result*List<'char>*'ctxt
+    | Error of string
+  \end{code}
+  \begin{code}[language=Caml]
+  type Parser<'char,'ctxt,'result> =
+    List<'char> * 'ctxt
+      -> Result<'char,'ctxt,'result>
+  \end{code}
+  \begin{code}[language=Caml]
+  let return res =
+    fun (chars,ctxt) ->
+      Done(res,chars,ctxt)
+  \end{code}
+  \begin{code}[language=Caml]
+  let (>>=) p k =
+    fun (chars,ctxt) ->
+      match p (chars,ctxt) with
+      | Error(p) ->
+          Error(p)
+      | Done(res,chars',ctxt') ->
+          k res (chars',ctxt')
+  \end{code}
 
   \subsubsection*{Towards $F_\omega$}
   In order to have type operators, we need higher-order polymorphism.
   The formal name for a type system that supports higher-order polymorphism, System-F$_\omega$.\cite[Chapter~30]{Pierce02}
+  Now that it is clear what is needed, we can show what language features we need to add.
   
   %Now that it is clear why monad-transformers are desirable, let's find out what type system we need to support them.
   %In order to have typeclasses like monads, we need subtyping($\lambda_{<:}$)\footcite[Chapter~15]{Pierce02}.

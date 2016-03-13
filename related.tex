@@ -8,13 +8,19 @@ To learn about the evolution of the standard library of Meta-Casanova and its ap
 
 For more information on Meta-Casanova, see the Meta-Casanova paper at \url{https://github.com/vs-team/Papers} or browse the freely-available source code at \url{https://github.com/vs-team/metacasanova}.
 
-\columnbreak
 \subsubsection*{Further work}
 In the immediate future there will be three bachelor theses on Meta-Casanova.
 Jarno Holstein will write his bachelors thesis on the implementation of the type-checker for the typesystem with the extensions described in this paper.
 Louis van der Burg will write his on the implementation and design of the Meta-Casanova library in the Meta-Casanova language.
 Finally, I will write mine on the implementation of a reliable code-generator.
 
-In the not-so-immediate future, there is the elephant in the room: full dependent types.
+In the not-so-immediate future there may be a possibility of full dependent types.
+Dependent types are types that depend on terms, and are currently not supported by Meta-Casanova.
+An example for this is the constant-length array, where the length of the array is embedded into the type at compile-time.
+
+A future inclusion of dependent types is possible.
+It would mean that the type namespace will be merged into the module namespace.
+This won't break backward compatibility, since all identifiers in Meta-Casanova need to be unique.
+
 Although dependent types complement the TypeFunc and Module system, it does not have the priority at the moment.
 The possibility for dependent types is therefore left open for future extensions.
