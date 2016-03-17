@@ -8,20 +8,20 @@ and we will conclude with the inheritance model of these modules.
 \subsubsection*{Kinds}
 Kinds are to types as types are to terms.\cite[Chapter~30]{Pierce02}
 They are ``one level up'' from types.
-The most used kind is \texttt{∗} (pronounced ``type'') and represents all proper types.
+The most used kind is \texttt{*} (pronounced ``type'') and represents all proper types.
 Type operators are indicated with \texttt{⇒} to differentiate them from type-signatures (\texttt{→}).
 For example a few types with their respective kinds:
 \begin{code}
-  int             ∗
-  float           ∗
-  pair            ∗ ⇒ ∗ ⇒ ∗
-  pair int        ∗ ⇒ ∗ 
-  pair float int  ∗
+  int             *
+  float           *
+  pair            * ⇒ * ⇒ *
+  pair int        * ⇒ * 
+  pair float int  *
   pair pair       error
 \end{code}
 
-\texttt{pair pair} is not a valid type, because type \texttt{pair} has kind \texttt{∗⇒∗⇒∗}.
-It only accepts two types with kind \texttt{∗}.
+\texttt{pair pair} is not a valid type, because type \texttt{pair} has kind \texttt{*⇒*⇒*}.
+It only accepts two types with kind \texttt{*}.
 Kinds are necessary to prevent these nonsensical types from typechecking.
 
 Kinds --unlike types-- have no run-time representation.
@@ -38,7 +38,7 @@ To illustrate modules, let's implement a generic monad.
 We first define the monad interface.
 
 \begin{code}
-  TypeFunc "Monad" ⇒ #\verb|(∗ ⇒ ∗)|# ⇒ Module
+  TypeFunc "Monad" ⇒ #\verb|(* ⇒ *)|# ⇒ Module
   Monad 'M ⇒ Module {
     Func 'a →">>=" → ('a →'M 'b) →'M 'b
     Func "return" →'a →'M 'a
@@ -47,11 +47,11 @@ We first define the monad interface.
 
 Now that we have the interface, let's instantiate an identity monad.
 To use the interface, we first declare a type that fits the first argument.
-It has kind \verb|(∗ ⇒ ∗)| and represents the monad constructor.
+It has kind \verb|(* ⇒ *)| and represents the monad constructor.
 In case of the identity monad this is trivial.
 
 \begin{code}
-  TypeFunc "IdCons" ⇒ ∗ ⇒ ∗
+  TypeFunc "IdCons" ⇒ * ⇒ *
   IdCons 'a ⇒ 'a
 \end{code}
 
@@ -90,7 +90,7 @@ we can define a new module MonadZero that inherits from Monad.
     Func "zero" → 'a
   }
 
-  TypeFunc "MonadZero" ⇒ #\verb|(∗⇒∗)|# ⇒ Module
+  TypeFunc "MonadZero" ⇒ #\verb|(*⇒*)|# ⇒ Module
   MonadZero 'M ⇒ Module {
     Inherit Monad 'M
     Inherit Zero

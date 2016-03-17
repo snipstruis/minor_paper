@@ -9,7 +9,7 @@ Currying enables partially application.
 For example, imagine we have a state monad.
 
 \begin{code}
-  TypeFunc "StateMonad" ⇒ ∗ ⇒ ∗ ⇒ ∗
+  TypeFunc "StateMonad" ⇒ * ⇒ * ⇒ *
 \end{code}
 
 \noindent Where the first argument represents the state type and the second the return type.
@@ -18,9 +18,9 @@ This means you can define a new state monad that already has its state-type spec
 It also gives the compiler a uniform way to handle type and function application,
 so this feature increases orthogonality while not increasing compiler complexity.
 
-\subsubsection*{Double arrows (⇒)}
+\subsubsection*{Double arrows}
 We choose double arrows for TypeFuncs to clearly differentiate them from function application(→).
-This distinction is to seperate run-time from compile-time.
+This distinction is to separate run-time from compile-time.
 
 This is unlike Haskell, it uses single arrows (→).
 Haskell can do this because it does not have the explicit run-time/compile-time distinction Meta-Casanova has.
